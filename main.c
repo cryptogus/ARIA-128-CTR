@@ -1,8 +1,8 @@
 #include "CTR.h"
 #include <string.h>
 
-
-//paddingÀº ±¸ÇöÇÏÁö ¾ÊÀ½
+// Weâ€™ve detected the file encoding as EUC-KR. When you commit changes we will transcode it to UTF-8. -> encoding problem
+////ctr modeëŠ” paddingì´ í•„ìš”ì—†ë‹¤.(The ctr mode does not require padding.)
 
 int main(int argc, unsigned char* argv[])
 {
@@ -25,11 +25,11 @@ int main(int argc, unsigned char* argv[])
 	*unsigned char* text2 = NULL;
 	*unsigned char* text3 = NULL;
 	* 
-	*printf("%zu\n", strlen(text)); //size_t ´Â ½Ã½ºÅÛ¿¡ µû¶ó ´Ş¶óÁú ¼ö ÀÖ´Â ÀÚ·áÇü, µû¶ó¼­ %zu¸¦ »ç¿ëÇÏ¿© ÄÚµùÀ» ÇØ³õÀ¸¸é µû·Î ¹Ù²Ù¾îÁÙ ÇÊ¿ä°¡ ¾øÀ¸¹Ç·Î ÀÌ½Ä¼ºÀÌ ³ô¾ÆÁü
+	*printf("%zu\n", strlen(text)); //size_t ëŠ” ì‹œìŠ¤í…œì— ë”°ë¼ ë‹¬ë¼ì§ˆ ìˆ˜ ìˆëŠ” ìë£Œí˜•, ë”°ë¼ì„œ %zuë¥¼ ì‚¬ìš©í•˜ì—¬ ì½”ë”©ì„ í•´ë†“ìœ¼ë©´ ë”°ë¡œ ë°”ê¾¸ì–´ì¤„ í•„ìš”ê°€ ì—†ìœ¼ë¯€ë¡œ ì´ì‹ì„±ì´ ë†’ì•„ì§
 	*printf("%s\n", text);
 	*text2 = CTR(text, strlen(text));
 	*
-	*printf("%s\n", text2);// -> ÀÎÄÚµù ¹®Á¦
+	*printf("%s\n", text2);// -> ì¸ì½”ë”© ë¬¸ì œ
 	*printf("%zu\n", strlen(text2));
 	*
 	*text3 = CTR(text2, strlen(text));
