@@ -17,7 +17,7 @@ int main(int argc, unsigned char* argv[])
 		free(dst);
 	}
 	else {
-		fprintf(stderr, "Usage: %s <text>\n", argv[0]);
+		fprintf(stderr, "Usage: %s start\n", argv[0]);
 		return -1;
 	}
 	
