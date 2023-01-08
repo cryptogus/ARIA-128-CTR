@@ -2,7 +2,7 @@
 
 unsigned char* CTR(unsigned char* text, size_t Byte) {
 	
-	/* key ¹Ú¾ÆµÎ±â*/
+	/* key ë°•ì•„ë‘ê¸°*/
 	unsigned char key_ctr[16] = { 0x2b,0x7e,0x15,0x16,0x28,0xae,0xd2,0xa6,0xab,0xf7,0x15,0x88,0x09,0xcf,0x4f,0x3c };
 	unsigned char IV_ctr[16] = { 0xf0,0xf1,0xf2,0xf3,0xf4,0xf5,0xf6,0xf7,0xf8,0xf9,0xfa,0xfb,0xfc,0xfd,0xfe,0xff };
 	
@@ -17,7 +17,9 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 		ARIA_en(IV_ctr, key_ctr, IV_ctr);
 
 		for (int j = 0; j < 16; j++) {
-			
+			if (Byte == j) {
+				break;
+			}
 			plain[j] = text[j + 16 * i];
 			cipher[j] = plain[j] ^ IV_ctr[j];
 			output[j + 16 * i] = cipher[j];
@@ -25,13 +27,13 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 		};
 
 
-		for (int k = 0; k < 15; k++) { // CTRÁ¤¼ö·Î º¯Çü -- sumº¯¼ö¿¡ ÀúÀå
+		for (int k = 0; k < 15; k++) { // CTRì •ìˆ˜ë¡œ ë³€í˜• -- sumë³€ìˆ˜ì— ì €ì¥
 			sum += IV_ctr[k];
 			sum <<= 1;
 		}
 		sum += IV_ctr[15] + 1;// ---- CTR + 1
 		sum %= (1 << 16);
-		for (int k = 15; k >= 0; k--) { // CTR°ªÀ» ºñÆ®·Î ¹Ù²Ş
+		for (int k = 15; k >= 0; k--) { // CTRê°’ì„ ë¹„íŠ¸ë¡œ ë°”ê¿ˆ
 			IV_ctr[k] = sum & 0x01;
 			sum = sum >> 1;
 		}
