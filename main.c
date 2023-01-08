@@ -17,7 +17,7 @@ int main(int argc, unsigned char* argv[])
 			fprintf(stderr, "Please enter text within 128 bytes.\n");
 			return 1;
 		}
-		printf("%zu\n", strlen(input) -1);
+		//printf("%zu\n", strlen(input) -1);
 		dst = CTR(input, strlen(input) - 1);
 		fprintf(stdout, "output: %s\n", dst);
 		free(dst); //-> 윈도우에서는 힙 메모리 할당 오류가 생긴다 원인 모르겠
