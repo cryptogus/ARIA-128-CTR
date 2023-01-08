@@ -10,20 +10,20 @@ int main(int argc, unsigned char* argv[])
 	unsigned char* dst = NULL;
 	unsigned char input[128];
 	
-	if (argc > 1) {
+	if (argc == 1) {
 		printf("input: ");
-		if (fgets(input, sizeof(input)/sizeof(unsigned char), stdin) == NULL || input[0] == '\n') {
+		if (fgets(input, 128, stdin) == NULL || input[0] == '\n') { //fgets는 엔터치면 '\n' 도 포함한다 즉 배열 마지막은 \n, \0 순서이다. 따라서 strlen크기 - 1이 문자열 길이다.
 			
 			fprintf(stderr, "Please enter text within 128 bytes.\n");
 			return 1;
 		}
-		
+		printf("%zu\n", strlen(input) -1);
 		dst = CTR(input, strlen(input) - 1);
 		fprintf(stdout, "output: %s\n", dst);
 		free(dst);
 	}
 	else {
-		fprintf(stderr, "Usage: %s start\n", argv[0]);
+		fprintf(stderr, "Usage: %s <text>\n", argv[0]);
 		return -1;
 	}
 	
