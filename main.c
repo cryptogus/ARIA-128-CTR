@@ -8,11 +8,17 @@ int main(int argc, unsigned char* argv[])
 {
 	
 	unsigned char* dst = NULL;
-	unsigned char* input = NULL;
+	unsigned char input[128];
+	
 	if (argc > 1) {
-		printf("input\n");
-		gets(input);
-		dst = CTR(input, strlen(input));
+		printf("input: ");
+		if (fgets(input, sizeof(input)/sizeof(unsigned char), stdin) == NULL || input[0] == '\n') {
+			
+			fprintf(stderr, "Please enter text within 128 bytes.\n");
+			return 1;
+		}
+		
+		dst = CTR(input, strlen(input) - 1);
 		fprintf(stdout, "output: %s\n", dst);
 		free(dst);
 	}
