@@ -8,9 +8,11 @@ int main(int argc, unsigned char* argv[])
 {
 	
 	unsigned char* dst = NULL;
-
-	if (argc == 2) {
-		dst = CTR(argv[1], strlen(argv[1]));
+	unsigned char* input = NULL;
+	if (argc > 1) {
+		printf("input\n");
+		gets(input);
+		dst = CTR(input, strlen(input));
 		fprintf(stdout, "output: %s\n", dst);
 		free(dst);
 	}
