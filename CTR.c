@@ -17,7 +17,7 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 		ARIA_en(IV_ctr, key_ctr, IV_ctr);
 
 		for (int j = 0; j < 16; j++) {
-			if (Byte == j) {
+			if (Byte == j + i * 16) {
 				break;
 			}
 			plain[j] = text[j + 16 * i];
