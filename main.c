@@ -20,7 +20,7 @@ int main(int argc, unsigned char* argv[])
 		//printf("%zu\n", strlen(input) -1);
 		dst = CTR(input, strlen(input) - 1);
 		fprintf(stdout, "output: %s\n", dst);
-		free(dst); //-> 윈도우에서는 힙 메모리 할당 오류가 생긴다 원인 모르겠
+		free(dst); //-> 윈도우에서는 힙 메모리 할당 오류가 생긴다 -> 원인: 16바이트 아래일때 CTR.c 의 for 문에서 할당된 힙 크기를 넘어가는 버퍼 오버플로우 발생
 	}
 	else {
 		fprintf(stderr, "Usage: %s start\n", argv[0]);
