@@ -11,7 +11,7 @@ int main(int argc, unsigned char* argv[])
 
 	if (argc == 2) {
 		dst = CTR(argv[1], strlen(argv[1]));
-		printf("output: %s\n", dst);
+		fprintf(stdout, "output: %s\n", dst);
 		free(dst);
 	}
 	else {
