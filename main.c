@@ -10,7 +10,7 @@ int main(int argc, unsigned char* argv[])
 	unsigned char* dst = NULL;
 	unsigned char input[128];
 	
-	if (argc == 1) {
+	if (argc == 2) {
 		printf("input: ");
 		if (fgets(input, 128, stdin) == NULL || input[0] == '\n') { //fgets는 엔터치면 '\n' 도 포함한다 즉 배열 마지막은 \n, \0 순서이다. 따라서 strlen크기 - 1이 문자열 길이다.
 			
@@ -20,10 +20,10 @@ int main(int argc, unsigned char* argv[])
 		printf("%zu\n", strlen(input) -1);
 		dst = CTR(input, strlen(input) - 1);
 		fprintf(stdout, "output: %s\n", dst);
-		free(dst);
+		free(dst); //-> 윈도우에서는 힙 메모리 할당 오류가 생긴다 원인 모르겠
 	}
 	else {
-		fprintf(stderr, "Usage: %s <text>\n", argv[0]);
+		fprintf(stderr, "Usage: %s start\n", argv[0]);
 		return -1;
 	}
 	
