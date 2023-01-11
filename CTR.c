@@ -26,16 +26,17 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 
 		};
 
-
-		for (int k = 0; k < 15; k++) { // CTR정수로 변형 -- sum변수에 저장
-			sum += IV_ctr[k];
-			sum <<= 1;
+		sum = 0;
+		for (int k = 0; k < 16; k++) { // CTR정수로 변형 -- sum변수에 저장
+			sum |= IV_ctr[k];
+			sum <<= 8;
 		}
-		sum += IV_ctr[15] + 1;// ---- CTR + 1
-		sum %= (1 << 16);
+		sum += 1;// ---- CTR + 1
+		sum &= 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111;
+		//sum %= (1 << 128);
 		for (int k = 15; k >= 0; k--) { // CTR값을 비트로 바꿈
-			IV_ctr[k] = sum & 0x01;
-			sum = sum >> 1;
+			IV_ctr[k] = sum & 0xff;
+			sum = sum >> 8;
 		}
 	}
 	output[Byte] = '\0';
