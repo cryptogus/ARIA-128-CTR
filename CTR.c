@@ -8,7 +8,7 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 	
 	unsigned char cipher[16] = { 0, };
 	unsigned char plain[16] = { 0, };
-	unsigned int sum = 0;
+	unsigned int sum[4] = {0,};
 	
 	unsigned char* output = (unsigned char*)calloc(Byte + 1, sizeof(unsigned char));
 	
@@ -26,18 +26,31 @@ unsigned char* CTR(unsigned char* text, size_t Byte) {
 
 		};
 
-		sum = 0;
+		
 		for (int k = 0; k < 16; k++) { // CTR정수로 변형 -- sum변수에 저장
-			sum |= IV_ctr[k];
-			sum <<= 8;
+			sum[k / 4] |= IV_ctr[k];
+			sum[k / 4] <<= 8;
 		}
-		sum += 1;// ---- CTR + 1
-		sum &= 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111;
+		sum[3] += 1;// ---- CTR + 1
+		if (sum[3] == 0){ // -- carry
+			sum[2] += 1;
+		}
+		if (sum[2] == 0){ // -- carry
+			sum[1] += 1;
+		}
+		if (sum[1] == 0){ // -- carry
+			sum[0] += 1;
+		}
+		//sum[0] &= 0xffffffff;
 		//sum %= (1 << 128);
 		for (int k = 15; k >= 0; k--) { // CTR값을 비트로 바꿈
-			IV_ctr[k] = sum & 0xff;
-			sum = sum >> 8;
+			IV_ctr[k] = sum[k / 4] & 0xff;
+			sum[k / 4] = sum[k / 4] >> 8;
 		}
+		sum[0] = 0;
+		sum[1] = 0;
+		sum[2] = 0;
+		sum[3] = 0;
 	}
 	output[Byte] = '\0';
 	return output;
